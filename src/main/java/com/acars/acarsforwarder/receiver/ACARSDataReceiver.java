@@ -35,7 +35,6 @@ public class ACARSDataReceiver {
     }
 
     private void sendData() {
-        selectCount();
         sendNextMessages();
     }
 
@@ -87,21 +86,6 @@ public class ACARSDataReceiver {
 
                 restTemplate.put(endpointUrl, requestData);
                 logger.info("[Total MSG: {}] - SENDING DATA: {}", sentMessages, requestData);
-            }
-        } catch(SQLException e) {
-            logger.error(e.getMessage());
-        }
-    }
-
-    private void selectCount() {
-        String sql = "SELECT count(*) FROM Messages";
-
-        try(Connection conn = this.connect()) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while(rs.next()) {
-                logger.info(String.valueOf(rs.getInt(1)));
             }
         } catch(SQLException e) {
             logger.error(e.getMessage());
