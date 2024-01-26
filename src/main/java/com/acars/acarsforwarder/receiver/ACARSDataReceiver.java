@@ -54,7 +54,7 @@ public class ACARSDataReceiver {
     }
 
     private void sendNextMessages() {
-        String endpointUrl = "https://34.28.80.116:1880/acars";
+        String endpointUrl = "http://34.28.80.116:1880/acars";
 
         String sql = "SELECT * FROM Messages WHERE MessageID > " + lastMessageIdSent;
 
@@ -83,8 +83,8 @@ public class ACARSDataReceiver {
 
                 String requestData = convertToJson(acarsData);
 
-                logger.info("[Total MSG: {}] - SENDING DATA: {}", sentMessages, requestData);
                 restTemplate.put(endpointUrl, requestData);
+                logger.info("[Total MSG: {}] - SENDING DATA: {}", sentMessages, requestData);
             }
         } catch(SQLException e) {
             logger.error(e.getMessage());
