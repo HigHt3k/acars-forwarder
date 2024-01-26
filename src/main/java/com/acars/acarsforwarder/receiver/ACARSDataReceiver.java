@@ -6,12 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.sql.*;
 
 @Component
 public class ACARSDataReceiver {
@@ -37,22 +32,43 @@ public class ACARSDataReceiver {
     private void sendData() {
         String endpointUrl = "https://34.28.80.116:1880/acars";
 
-        String requestData = "data";
+        String requestData = "";
 
-        try(BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
-            String line;
-            while((line = br.readLine()) != null) {
-                logger.info(line);
-            }
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-
+        selectCount();
 
         logger.info("SENDING DATA: {}", requestData);
         sentMessages++;
         logger.info("Total amount of sent messages: {}", sentMessages);
 
         restTemplate.put(endpointUrl, requestData);
+    }
+
+    private Connection connect() {
+        Connection conn = null;
+        try {
+            String url = "jdbc:sqlite:" + pathToFile;
+            conn = DriverManager.getConnection(url);
+
+            logger.info("Connection established");
+
+        } catch(SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return conn;
+    }
+
+    private void selectCount() {
+        String sql = "SELECT count(*) FROM Messages";
+
+        try(Connection conn = this.connect()) {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()) {
+                logger.info(String.valueOf(rs.getInt(0)));
+            }
+        } catch(SQLException e) {
+            logger.error(e.getMessage());
+        }
     }
 }
