@@ -46,7 +46,7 @@ public class ACARSDataReceiver {
     private Connection connect() {
         Connection conn = null;
         try {
-            String url = "jdbc:sqlite:/home/pi/acarsserv/acarsserv.sqb";
+            String url = "jdbc:sqlite:/home/pi/acarsserv.sqb";
             conn = DriverManager.getConnection(url);
 
             logger.info("Connection established");
@@ -65,7 +65,7 @@ public class ACARSDataReceiver {
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()) {
-                logger.info(String.valueOf(rs.getInt(0)));
+                logger.info(String.valueOf(rs.getInt(1)));
             }
         } catch(SQLException e) {
             logger.error(e.getMessage());
