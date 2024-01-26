@@ -30,6 +30,7 @@ public class ACARSDataReceiver {
 
     @Scheduled(fixedRate = 5000)
     public void retrieveACARSData() {
+        logger.info("Scheduled data send job");
         sendData();
     }
 
