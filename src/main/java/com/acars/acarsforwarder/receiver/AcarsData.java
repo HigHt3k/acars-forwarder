@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class AcarsData {
     int messageId;
     int flightId;
-    LocalDateTime time;
+    String time;
     int stId;
     int channel;
     int error;

@@ -69,7 +69,7 @@ public class ACARSDataReceiver {
                 lastMessageIdSent = acarsData.getMessageId();
                 logger.info("Processing message with id {}", lastMessageIdSent);
                 acarsData.setFlightId(rs.getInt(2));
-                acarsData.setTime(LocalDateTime.now());
+                acarsData.setTime(rs.getString(3));
                 acarsData.setStId(rs.getInt(4));
                 acarsData.setChannel(rs.getInt(5));
                 acarsData.setError(rs.getInt(6));
