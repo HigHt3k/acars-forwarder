@@ -56,7 +56,7 @@ public class ACARSDataReceiver {
     private void sendNextMessages() {
         String endpointUrl = "https://34.28.80.116:1880/acars";
 
-        String sql = "SELECT * FROM Messages WHERE message_id > " + lastMessageIdSent;
+        String sql = "SELECT * FROM Messages WHERE MessageID > " + lastMessageIdSent;
 
         try(Connection conn = this.connect()) {
             logger.info("Excecuting query to get data...");
