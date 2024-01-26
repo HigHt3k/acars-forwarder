@@ -56,7 +56,7 @@ public class ACARSDataReceiver {
     private void sendNextMessages() {
         String endpointUrl = "http://34.28.80.116:1880/acars";
 
-        String sql = "SELECT * FROM Messages WHERE MessageID > " + lastMessageIdSent;
+        String sql = "SELECT * FROM Messages WHERE  m JOIN Flights f on m.FlightID = f.FlightID m.MessageID > " + lastMessageIdSent;
 
         try(Connection conn = this.connect()) {
             logger.info("Excecuting query to get data...");
@@ -80,6 +80,8 @@ public class ACARSDataReceiver {
                 acarsData.setBlockNo(rs.getString(11));
                 acarsData.setMessNo(rs.getString(12));
                 acarsData.setText(rs.getString(13));
+                acarsData.setAircraftRegistration(rs.getString(15));
+                acarsData.setFlightNumber(rs.getString(16));
 
                 String requestData = convertToJson(acarsData);
 

@@ -23,4 +23,6 @@ public class AcarsData {
     String blockNo;
     String messNo;
     String text;
+    String aircraftRegistration;
+    String flightNumber;
 }
